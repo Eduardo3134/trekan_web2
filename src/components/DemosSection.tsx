@@ -43,6 +43,69 @@ function DemoCard({
   );
 }
 
+function VoiceDemo() {
+  const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async () => {
+    setError("");
+    if (!phone.trim()) {
+      setError("Ingresa tu número de teléfono.");
+      return;
+    }
+    setLoading(true);
+    try {
+      await fetch("/api/demo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone: phone.trim(), demo: "voice" }),
+      });
+      setSent(true);
+    } catch {
+      setError("Ocurrió un error. Intenta nuevamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <DemoCard
+      icon={<PhoneCall size={22} />}
+      title="Demo Voz"
+      description="Prueba cómo sería tu agente telefónico. Agrega tu número y recibe una llamada demo de nuestro agente de IA."
+      accentColor="#006AFF"
+    >
+      <div className="space-y-3">
+        {sent ? (
+          <p className="text-sm text-green-600 font-medium text-center py-2">
+            ¡Listo! Recibirás una llamada en breve.
+          </p>
+        ) : (
+          <>
+            <Input
+              placeholder="+56 9 1234 5678"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="rounded"
+            />
+            {error && <p className="text-xs text-red-500">{error}</p>}
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              className="w-full font-semibold rounded py-2 text-sm text-white hover:opacity-90 transition-opacity disabled:opacity-60"
+              style={{ backgroundColor: "#006AFF" }}
+            >
+              {loading ? "Enviando..." : "Recibir llamada demo →"}
+            </button>
+          </>
+        )}
+      </div>
+    </DemoCard>
+  );
+}
+
 function CampaignDemo({
   icon,
   title,
@@ -130,22 +193,7 @@ export default function DemosSection() {
           </DemoCard>
 
           {/* Demo Voz */}
-          <DemoCard
-            icon={<PhoneCall size={22} />}
-            title="Demo Voz"
-            description="Prueba cómo sería tu agente telefónico. Agrega tu número y recibe una llamada demo de nuestro agente de IA."
-            accentColor="#006AFF"
-          >
-            <div className="space-y-3">
-              <Input placeholder="+56 9 1234 5678" className="rounded" />
-              <button
-                className="w-full font-semibold rounded py-2 text-sm text-white hover:opacity-90 transition-opacity"
-                style={{ backgroundColor: "#006AFF" }}
-              >
-                Recibir llamada demo →
-              </button>
-            </div>
-          </DemoCard>
+          <VoiceDemo />
         </div>
 
         {/* Row 2: Campaign demos */}
