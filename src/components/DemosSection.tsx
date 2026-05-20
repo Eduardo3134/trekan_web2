@@ -118,12 +118,15 @@ export default function DemosSection() {
             description="Prueba cómo sería tu agente de WhatsApp respondiendo preguntas, ayudando con ventas y agendando reuniones en tiempo real."
             accentColor="#25D366"
           >
-            <button
-              className="w-full font-semibold rounded py-2 text-sm text-white hover:opacity-90 transition-opacity"
+            <a
+              href="https://wa.me/56963129255?text=Hola%2C%20quiero%20probar%20la%20Demo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center font-semibold rounded py-2 text-sm text-white hover:opacity-90 transition-opacity"
               style={{ backgroundColor: "#25D366" }}
             >
               Probar Agente WhatsApp →
-            </button>
+            </a>
           </DemoCard>
 
           {/* Demo Voz */}
