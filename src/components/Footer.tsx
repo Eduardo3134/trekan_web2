@@ -45,7 +45,7 @@ const socialLinks = [
   {
     icon: <WhatsAppIcon />,
     label: "WhatsApp",
-    href: "https://wa.me/56965231694?text=Hola%2C%20quiero%20probar%20la%20Demo",
+    href: "https://wa.me/56965231694?text=Hola",
     bg: "#25D366",
   },
 ];
