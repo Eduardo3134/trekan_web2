@@ -119,7 +119,7 @@ export default function DemosSection() {
             accentColor="#25D366"
           >
             <a
-              href="https://wa.me/56963129255?text=Hola%2C%20quiero%20probar%20la%20Demo"
+              href="https://wa.me/56965231694?text=Hola%2C%20quiero%20probar%20la%20Demo"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full inline-flex items-center justify-center font-semibold rounded py-2 text-sm text-white hover:opacity-90 transition-opacity"
