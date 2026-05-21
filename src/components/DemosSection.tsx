@@ -6,10 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { MessageCircle, PhoneCall, Megaphone, Zap } from "lucide-react";
 
 const CAMPAIGN_MESSAGE = (name: string) =>
-  `Hola ${name || "[nombre]"}, te estamos llamando para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento.`;
+  `Hola ${name || "[nombre]"}, te estamos escribiendo para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento.`;
 
 const MIXED_MESSAGE = (name: string) =>
-  `Hola ${name || "[nombre]"}, te estamos llamando para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento para ti. Si aceptas, te enviaremos un mensaje de WhatsApp con el acceso a la tienda online.`;
+  `Hola ${name || "[nombre]"}, te estamos escribiendo para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento para ti. Si aceptas, te enviaremos un mensaje de WhatsApp con el acceso a la tienda online.`;
 
 function DemoCard({
   icon,
@@ -113,7 +113,7 @@ function WhatsAppCampaignDemo() {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
 
-  const message = `Hola ${name}, te estamos llamando para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento`;
+  const message = `Hola ${name}, te estamos escribiendo para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento`;
 
   const handleSubmit = async () => {
     setError("");
@@ -163,7 +163,7 @@ function WhatsAppCampaignDemo() {
               className="rounded"
             />
             <div className="bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-700 leading-relaxed italic">
-              &ldquo;{`Hola ${name || "[nombre]"}, te estamos llamando para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento`}&rdquo;
+              &ldquo;{`Hola ${name || "[nombre]"}, te estamos escribiendo para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento`}&rdquo;
             </div>
             {error && <p className="text-xs text-red-500">{error}</p>}
             <button
