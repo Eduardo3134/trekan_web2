@@ -296,6 +296,79 @@ function VoiceCampaignDemo() {
   );
 }
 
+function MixedCampaignDemo() {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async () => {
+    setError("");
+    if (!phone) {
+      setError("Ingresa tu número de teléfono.");
+      return;
+    }
+    setLoading(true);
+    try {
+      await fetch("/api/demo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          phone,
+          demo: "voice_whatsapp_campaign",
+          name: name.trim(),
+          message: `Hola ${name.trim()}, te estamos escribiendo para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento para ti. Si aceptas, te enviaremos un mensaje de WhatsApp con el acceso a la tienda online`,
+        }),
+      });
+      setSent(true);
+    } catch {
+      setError("Ocurrió un error. Intenta nuevamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <DemoCard
+      icon={<Zap size={22} />}
+      title="Demo Campaña Mixta (Voz + WhatsApp)"
+      description="Combina una llamada inicial con un mensaje de WhatsApp automático. Ingresa tu nombre y número para ver la experiencia completa."
+      accentColor="#7C3AED"
+    >
+      <div className="space-y-3">
+        {sent ? (
+          <p className="text-sm text-green-600 font-medium text-center py-2">
+            ¡Listo! Recibirás la llamada y el mensaje en breve.
+          </p>
+        ) : (
+          <>
+            <Input
+              placeholder="Tu nombre"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="rounded"
+            />
+            <PhoneInput value={phone} onChange={setPhone} />
+            <div className="bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-700 leading-relaxed italic">
+              &ldquo;{MIXED_MESSAGE(name)}&rdquo;
+            </div>
+            {error && <p className="text-xs text-red-500">{error}</p>}
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              className="w-full font-semibold rounded py-2 text-sm text-white hover:opacity-90 transition-opacity disabled:opacity-60"
+              style={{ backgroundColor: "#7C3AED" }}
+            >
+              {loading ? "Enviando..." : "Probar campaña mixta →"}
+            </button>
+          </>
+        )}
+      </div>
+    </DemoCard>
+  );
+}
+
 function CampaignDemo({
   icon,
   title,
@@ -393,15 +466,7 @@ export default function DemosSection() {
         {/* Row 3: Mixed campaign + CTA */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* Campaña Mixta */}
-          <CampaignDemo
-            icon={<Zap size={22} />}
-            title="Demo Campaña Mixta (Voz + WhatsApp)"
-            description="Combina una llamada inicial con un mensaje de WhatsApp automático. Ingresa tu nombre y número para ver la experiencia completa."
-            accentColor="#7C3AED"
-            getPreview={MIXED_MESSAGE}
-            ctaLabel="Probar campaña mixta →"
-            showPhone
-          />
+          <MixedCampaignDemo />
 
           {/* CTA Card */}
           <div
