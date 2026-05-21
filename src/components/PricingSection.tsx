@@ -89,7 +89,9 @@ function PlanCard({
       </ul>
 
       <a
-        href="#registro"
+        href={`https://wa.me/56965231694?text=${encodeURIComponent(`Hola, me interesa el servicio ${name}`)}`}
+        target="_blank"
+        rel="noopener noreferrer"
         className={`w-full inline-flex items-center justify-center font-bold rounded py-2 text-sm transition-colors ${
           highlighted || isCustom
             ? "text-white hover:opacity-90"
@@ -245,7 +247,9 @@ export default function PricingSection() {
                 </ul>
               </div>
               <a
-                href="#registro"
+                href={`https://wa.me/56965231694?text=${encodeURIComponent("Hola, me interesa el servicio Supervisor IA")}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-5 w-full sm:w-auto inline-flex items-center justify-center font-bold rounded text-white px-5 py-2 text-sm hover:opacity-90 transition-opacity"
                 style={{ backgroundColor: "#F4860C" }}
               >
@@ -292,7 +296,9 @@ export default function PricingSection() {
                 <CheckItem text="Reportes de tasa de éxito y conversación" />
               </ul>
               <a
-                href="#registro"
+                href={`https://wa.me/56965231694?text=${encodeURIComponent("Hola, me interesa el servicio Campaña Voz + Agente IA")}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center font-bold rounded text-white py-2 text-sm hover:opacity-90 transition-opacity"
                 style={{ backgroundColor: "#006AFF" }}
               >
@@ -321,7 +327,9 @@ export default function PricingSection() {
                 <CheckItem text="Seguimiento y reportes de apertura y conversión" />
               </ul>
               <a
-                href="#registro"
+                href={`https://wa.me/56965231694?text=${encodeURIComponent("Hola, me interesa el servicio Campaña WhatsApp + Agente IA")}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center font-bold rounded text-white py-2 text-sm hover:opacity-90 transition-opacity"
                 style={{ backgroundColor: "#25D366" }}
               >
