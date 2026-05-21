@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { MessageCircle, PhoneCall, Megaphone, Zap } from "lucide-react";
 
 const CAMPAIGN_MESSAGE = (name: string) =>
-  `Hola ${name || "[nombre]"}, te estamos escribiendo para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento.`;
+  `Hola ${name || "[nombre]"}, te estamos llamando para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento.`;
 
 const MIXED_MESSAGE = (name: string) =>
   `Hola ${name || "[nombre]"}, te estamos escribiendo para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento para ti. Si aceptas, te enviaremos un mensaje de WhatsApp con el acceso a la tienda online.`;
@@ -126,7 +126,7 @@ function WhatsAppCampaignDemo() {
       await fetch("/api/demo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone: phone.trim(), demo: "whatsapp_campaign", message }),
+        body: JSON.stringify({ phone: phone.trim(), demo: "whatsapp_campaign", name: name.trim(), message }),
       });
       setSent(true);
     } catch {
