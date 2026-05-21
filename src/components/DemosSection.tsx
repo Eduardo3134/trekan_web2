@@ -181,6 +181,84 @@ function WhatsAppCampaignDemo() {
   );
 }
 
+function VoiceCampaignDemo() {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async () => {
+    setError("");
+    if (!phone.trim()) {
+      setError("Ingresa tu número de teléfono.");
+      return;
+    }
+    setLoading(true);
+    try {
+      await fetch("/api/demo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          phone: phone.trim(),
+          demo: "voice_campaign",
+          name: name.trim(),
+          message: `Hola ${name.trim()}, te estamos llamando para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento`,
+        }),
+      });
+      setSent(true);
+    } catch {
+      setError("Ocurrió un error. Intenta nuevamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <DemoCard
+      icon={<PhoneCall size={22} />}
+      title="Demo Campaña Voz"
+      description="Prueba cómo serían tus campañas telefónicas. Ingresa tu nombre y número, y escucha el audio que se generaría."
+      accentColor="#F4860C"
+    >
+      <div className="space-y-3">
+        {sent ? (
+          <p className="text-sm text-green-600 font-medium text-center py-2">
+            ¡Listo! Recibirás una llamada en breve.
+          </p>
+        ) : (
+          <>
+            <Input
+              placeholder="Tu nombre"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="rounded"
+            />
+            <Input
+              placeholder="+56 9 1234 5678"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="rounded"
+            />
+            <div className="bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-700 leading-relaxed italic">
+              &ldquo;{CAMPAIGN_MESSAGE(name)}&rdquo;
+            </div>
+            {error && <p className="text-xs text-red-500">{error}</p>}
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              className="w-full font-semibold rounded py-2 text-sm text-white hover:opacity-90 transition-opacity disabled:opacity-60"
+              style={{ backgroundColor: "#F4860C" }}
+            >
+              {loading ? "Enviando..." : "Escuchar audio de prueba →"}
+            </button>
+          </>
+        )}
+      </div>
+    </DemoCard>
+  );
+}
+
 function CampaignDemo({
   icon,
   title,
@@ -277,15 +355,7 @@ export default function DemosSection() {
           <WhatsAppCampaignDemo />
 
           {/* Campaña Voz */}
-          <CampaignDemo
-            icon={<PhoneCall size={22} />}
-            title="Demo Campaña Voz"
-            description="Prueba cómo serían tus campañas telefónicas. Ingresa tu nombre y número, y escucha el audio que se generaría."
-            accentColor="#F4860C"
-            getPreview={CAMPAIGN_MESSAGE}
-            ctaLabel="Escuchar audio de prueba →"
-            showPhone
-          />
+          <VoiceCampaignDemo />
         </div>
 
         {/* Row 3: Mixed campaign + CTA */}
