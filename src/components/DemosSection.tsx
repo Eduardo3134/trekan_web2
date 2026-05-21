@@ -106,6 +106,81 @@ function VoiceDemo() {
   );
 }
 
+function WhatsAppCampaignDemo() {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+
+  const message = `Hola ${name}, te estamos llamando para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento`;
+
+  const handleSubmit = async () => {
+    setError("");
+    if (!phone.trim()) {
+      setError("Ingresa tu número de teléfono.");
+      return;
+    }
+    setLoading(true);
+    try {
+      await fetch("/api/demo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone: phone.trim(), demo: "whatsapp_campaign", message }),
+      });
+      setSent(true);
+    } catch {
+      setError("Ocurrió un error. Intenta nuevamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <DemoCard
+      icon={<MessageCircle size={22} />}
+      title="Demo Campaña WhatsApp"
+      description="Prueba cómo serían tus campañas por WhatsApp. Ingresa tu nombre y número, y visualiza el mensaje que recibirías."
+      accentColor="#128C7E"
+    >
+      <div className="space-y-3">
+        {sent ? (
+          <p className="text-sm text-green-600 font-medium text-center py-2">
+            ¡Listo! Recibirás el mensaje en breve.
+          </p>
+        ) : (
+          <>
+            <Input
+              placeholder="Tu nombre"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="rounded"
+            />
+            <Input
+              placeholder="+56 9 1234 5678"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="rounded"
+            />
+            <div className="bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-700 leading-relaxed italic">
+              &ldquo;{`Hola ${name || "[nombre]"}, te estamos llamando para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento`}&rdquo;
+            </div>
+            {error && <p className="text-xs text-red-500">{error}</p>}
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              className="w-full font-semibold rounded py-2 text-sm text-white hover:opacity-90 transition-opacity disabled:opacity-60"
+              style={{ backgroundColor: "#128C7E" }}
+            >
+              {loading ? "Enviando..." : "Enviar mensaje de prueba →"}
+            </button>
+          </>
+        )}
+      </div>
+    </DemoCard>
+  );
+}
+
 function CampaignDemo({
   icon,
   title,
@@ -199,15 +274,7 @@ export default function DemosSection() {
         {/* Row 2: Campaign demos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
           {/* Campaña WhatsApp */}
-          <CampaignDemo
-            icon={<MessageCircle size={22} />}
-            title="Demo Campaña WhatsApp"
-            description="Prueba cómo serían tus campañas por WhatsApp. Ingresa tu nombre y número, y visualiza el mensaje que recibirías."
-            accentColor="#128C7E"
-            getPreview={CAMPAIGN_MESSAGE}
-            ctaLabel="Enviar mensaje de prueba →"
-            showPhone
-          />
+          <WhatsAppCampaignDemo />
 
           {/* Campaña Voz */}
           <CampaignDemo
