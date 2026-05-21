@@ -5,6 +5,58 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { MessageCircle, PhoneCall, Megaphone, Zap } from "lucide-react";
 
+const COUNTRY_CODES = [
+  { label: "CL +56", value: "+56" },
+  { label: "AR +54", value: "+54" },
+  { label: "MX +52", value: "+52" },
+  { label: "CO +57", value: "+57" },
+  { label: "PE +51", value: "+51" },
+  { label: "ES +34", value: "+34" },
+  { label: "US +1",  value: "+1"  },
+];
+
+function PhoneInput({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (val: string) => void;
+}) {
+  const [countryCode, setCountryCode] = useState("+56");
+  const [local, setLocal] = useState("");
+
+  const handleLocal = (raw: string) => {
+    const digits = raw.replace(/\s/g, "");
+    setLocal(digits);
+    onChange(countryCode + digits);
+  };
+
+  const handleCode = (code: string) => {
+    setCountryCode(code);
+    onChange(code + local);
+  };
+
+  return (
+    <div className="flex gap-2">
+      <select
+        value={countryCode}
+        onChange={(e) => handleCode(e.target.value)}
+        className="border border-gray-300 rounded px-2 py-2 text-sm bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 shrink-0"
+      >
+        {COUNTRY_CODES.map((c) => (
+          <option key={c.value} value={c.value}>{c.label}</option>
+        ))}
+      </select>
+      <Input
+        placeholder="963129255"
+        value={local}
+        onChange={(e) => handleLocal(e.target.value)}
+        className="rounded flex-1"
+      />
+    </div>
+  );
+}
+
 const CAMPAIGN_MESSAGE = (name: string) =>
   `Hola ${name || "[nombre]"}, te estamos llamando para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento.`;
 
@@ -51,7 +103,7 @@ function VoiceDemo() {
 
   const handleSubmit = async () => {
     setError("");
-    if (!phone.trim()) {
+    if (!phone) {
       setError("Ingresa tu número de teléfono.");
       return;
     }
@@ -60,7 +112,7 @@ function VoiceDemo() {
       await fetch("/api/demo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone: phone.trim(), demo: "voice" }),
+        body: JSON.stringify({ phone, demo: "voice" }),
       });
       setSent(true);
     } catch {
@@ -84,12 +136,7 @@ function VoiceDemo() {
           </p>
         ) : (
           <>
-            <Input
-              placeholder="+56 9 1234 5678"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="rounded"
-            />
+            <PhoneInput value={phone} onChange={setPhone} />
             {error && <p className="text-xs text-red-500">{error}</p>}
             <button
               onClick={handleSubmit}
@@ -126,7 +173,7 @@ function WhatsAppCampaignDemo() {
       await fetch("/api/demo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone: phone.trim(), demo: "whatsapp_campaign", name: name.trim(), message }),
+        body: JSON.stringify({ phone, demo: "whatsapp_campaign", name: name.trim(), message }),
       });
       setSent(true);
     } catch {
@@ -156,12 +203,7 @@ function WhatsAppCampaignDemo() {
               onChange={(e) => setName(e.target.value)}
               className="rounded"
             />
-            <Input
-              placeholder="+56 9 1234 5678"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="rounded"
-            />
+            <PhoneInput value={phone} onChange={setPhone} />
             <div className="bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-700 leading-relaxed italic">
               &ldquo;{`Hola ${name || "[nombre]"}, te estamos escribiendo para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento`}&rdquo;
             </div>
@@ -200,7 +242,7 @@ function VoiceCampaignDemo() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          phone: phone.trim(),
+          phone,
           demo: "voice_campaign",
           name: name.trim(),
           message: `Hola ${name.trim()}, te estamos llamando para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento`,
@@ -234,12 +276,7 @@ function VoiceCampaignDemo() {
               onChange={(e) => setName(e.target.value)}
               className="rounded"
             />
-            <Input
-              placeholder="+56 9 1234 5678"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="rounded"
-            />
+            <PhoneInput value={phone} onChange={setPhone} />
             <div className="bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-700 leading-relaxed italic">
               &ldquo;{CAMPAIGN_MESSAGE(name)}&rdquo;
             </div>
@@ -289,12 +326,7 @@ function CampaignDemo({
           className="rounded"
         />
         {showPhone && (
-          <Input
-            placeholder="+56 9 1234 5678"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="rounded"
-          />
+          <PhoneInput value={phone} onChange={setPhone} />
         )}
         <div className="bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-700 leading-relaxed italic">
           &ldquo;{getPreview(name)}&rdquo;
