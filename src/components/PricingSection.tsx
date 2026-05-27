@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Check, Zap, PhoneCall, MessageCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -19,6 +22,7 @@ function PlanCard({
   badge,
   ctaLabel,
   isCustom,
+  showSavings,
 }: {
   name: string;
   price?: string;
@@ -28,6 +32,7 @@ function PlanCard({
   badge?: string;
   ctaLabel: string;
   isCustom?: boolean;
+  showSavings?: boolean;
 }) {
   return (
     <div
@@ -57,13 +62,20 @@ function PlanCard({
           {name}
         </h4>
         {price ? (
-          <div className="flex items-end gap-1">
-            <span className={`text-4xl font-extrabold ${isCustom ? "text-white" : "text-white"}`}>
-              {price}
-            </span>
-            {priceUnit && (
-              <span className={`text-sm mb-1 ${isCustom ? "text-white/70" : "text-gray-400"}`}>
-                {priceUnit}
+          <div className="flex flex-col gap-1">
+            <div className="flex items-end gap-1">
+              <span className={`text-4xl font-extrabold ${isCustom ? "text-white" : "text-white"}`}>
+                {price}
+              </span>
+              {priceUnit && (
+                <span className={`text-sm mb-1 ${isCustom ? "text-white/70" : "text-gray-400"}`}>
+                  {priceUnit}
+                </span>
+              )}
+            </div>
+            {showSavings && (
+              <span className="inline-flex self-start items-center text-xs font-bold text-green-400 bg-green-400/10 border border-green-400/20 rounded-full px-2.5 py-0.5">
+                ▼ 30% menos
               </span>
             )}
           </div>
@@ -136,6 +148,17 @@ function SectionTitle({
 }
 
 export default function PricingSection() {
+  const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
+  const isAnnual = billing === "annual";
+
+  const prices = {
+    inicial: isAnnual ? "$53" : "$75",
+    profesional: isAnnual ? "$105" : "$150",
+    extendido: isAnnual ? "$315" : "$450",
+  };
+  const priceUnit = isAnnual ? "USD / mes · cobrado anual" : "USD / mes";
+  const extraSkillPrice = isAnnual ? "14" : "20";
+
   return (
     <section id="precios" className="relative py-20 bg-[#0A0E1F] scroll-mt-16 overflow-hidden">
       {/* Top-center blue radial glow */}
@@ -145,13 +168,37 @@ export default function PricingSection() {
       />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
             Planes para cada etapa de tu negocio
           </h2>
           <p className="text-base text-gray-400 max-w-xl mx-auto">
             Sin costos ocultos. Precios no incluyen impuestos aplicables.
           </p>
+        </div>
+
+        {/* Billing toggle */}
+        <div className="flex justify-center mb-12">
+          <div className="relative flex items-center bg-[#0F1629] border border-white/10 rounded-full p-1 gap-1">
+            <button
+              onClick={() => setBilling("monthly")}
+              suppressHydrationWarning
+              className={`relative px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+                !isAnnual ? "bg-[#006AFF] text-white shadow-md" : "text-gray-400 hover:text-white"
+              }`}
+            >
+              Plan Mensual
+            </button>
+            <button
+              onClick={() => setBilling("annual")}
+              suppressHydrationWarning
+              className={`relative px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+                isAnnual ? "bg-[#006AFF] text-white shadow-md" : "text-gray-400 hover:text-white"
+              }`}
+            >
+              Plan Anual
+            </button>
+          </div>
         </div>
 
         {/* ===== AGENTES IA ===== */}
@@ -161,20 +208,21 @@ export default function PricingSection() {
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
             <PlanCard
               name="Plan Inicial"
-              price="$75"
-              priceUnit="USD / mes"
+              price={prices.inicial}
+              priceUnit={priceUnit}
               features={[
                 "1 agente",
                 "1 habilidad",
                 "Hasta 10 conversaciones por día",
                 "Opcional: Integración con Google Calendar",
               ]}
+              showSavings={isAnnual}
               ctaLabel="Comenzar →"
             />
             <PlanCard
               name="Plan Profesional"
-              price="$150"
-              priceUnit="USD / mes"
+              price={prices.profesional}
+              priceUnit={priceUnit}
               features={[
                 "1 agente",
                 "2 habilidades",
@@ -183,18 +231,20 @@ export default function PricingSection() {
               ]}
               highlighted
               badge="Más popular"
+              showSavings={isAnnual}
               ctaLabel="Comenzar →"
             />
             <PlanCard
               name="Plan Extendido"
-              price="$450"
-              priceUnit="USD / mes"
+              price={prices.extendido}
+              priceUnit={priceUnit}
               features={[
                 "1 agente",
                 "Habilidades ilimitadas",
                 "Hasta 300 conversaciones por día",
                 "Opcional: Integración con Google Calendar",
               ]}
+              showSavings={isAnnual}
               ctaLabel="Comenzar →"
             />
             <PlanCard
@@ -214,7 +264,7 @@ export default function PricingSection() {
           <div className="rounded-xl border border-white/10 bg-[#0A0E1F] p-5 text-sm text-gray-400 space-y-1.5">
             <p className="font-semibold text-gray-200 mb-2">Consideraciones:</p>
             <ul className="space-y-1.5">
-              <CheckItem text="Cada habilidad adicional: 20 USD por mes" />
+              <CheckItem text={`Cada habilidad adicional: ${extraSkillPrice} USD por mes`} />
               <CheckItem text="Integraciones con CRM, ERP o software de gestión: 500 USD (pago único)" />
               <CheckItem text="Los precios no incluyen impuestos" />
             </ul>
