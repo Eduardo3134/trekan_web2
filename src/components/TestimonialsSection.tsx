@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const testimonials = [
   {
@@ -75,14 +75,42 @@ function TestimonialCard({ t }: { t: typeof testimonials[0] }) {
 
 export default function TestimonialsSection() {
   const [current, setCurrent] = useState(0);
-  const total = testimonials.length; // 4
+  const total = testimonials.length;
+
+  // drag/swipe state
+  const dragStart = useRef<number | null>(null);
+  const isDragging = useRef(false);
+
+  const next = () => setCurrent((i) => (i === total - 1 ? 0 : i + 1));
+  const prev = () => setCurrent((i) => (i === 0 ? total - 1 : i - 1));
+
+  const onDragStart = (clientX: number) => { dragStart.current = clientX; isDragging.current = false; };
+  const onDragEnd = (clientX: number) => {
+    if (dragStart.current === null) return;
+    const diff = dragStart.current - clientX;
+    if (Math.abs(diff) > 40) { diff > 0 ? next() : prev(); }
+    dragStart.current = null;
+  };
+
+  // Reset auto-advance timer on manual interaction
+  const [tick, setTick] = useState(0);
+  const resetTimer = () => setTick((t) => t + 1);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((i) => (i === total - 1 ? 0 : i + 1));
-    }, 4000);
+    const timer = setInterval(next, 4000);
     return () => clearInterval(timer);
-  }, [total]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tick, total]);
+
+  const dragHandlers = {
+    onMouseDown: (e: React.MouseEvent) => { onDragStart(e.clientX); },
+    onMouseMove: (e: React.MouseEvent) => { if (dragStart.current !== null) isDragging.current = true; },
+    onMouseUp: (e: React.MouseEvent) => { onDragEnd(e.clientX); resetTimer(); },
+    onMouseLeave: (e: React.MouseEvent) => { if (dragStart.current !== null) { onDragEnd(e.clientX); resetTimer(); } },
+    onTouchStart: (e: React.TouchEvent) => { onDragStart(e.touches[0].clientX); },
+    onTouchEnd: (e: React.TouchEvent) => { onDragEnd(e.changedTouches[0].clientX); resetTimer(); },
+    style: { cursor: "grab" } as React.CSSProperties,
+  };
 
   return (
     <section className="py-20 bg-white">
@@ -97,12 +125,11 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Desktop: show 2 cards, slide 1 at a time, equal height */}
-        <div className="hidden lg:block overflow-hidden">
+        <div className="hidden lg:block overflow-hidden select-none" {...dragHandlers}>
           <div
             className="flex items-stretch transition-transform duration-700 ease-in-out"
             style={{ transform: `translateX(-${current * 50}%)` }}
           >
-            {/* Duplicate first item at end for seamless wrap */}
             {[...testimonials, testimonials[0]].map((t, i) => (
               <div key={i} className="w-1/2 shrink-0 px-3 flex">
                 <TestimonialCard t={t} />
@@ -112,7 +139,7 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Mobile/tablet: single carousel */}
-        <div className="lg:hidden overflow-hidden">
+        <div className="lg:hidden overflow-hidden select-none" {...dragHandlers}>
           <div
             className="flex transition-transform duration-700 ease-in-out"
             style={{ transform: `translateX(-${current * 100}%)` }}
@@ -130,7 +157,7 @@ export default function TestimonialsSection() {
           {testimonials.map((_, i) => (
             <button
               key={i}
-              onClick={() => setCurrent(i)}
+              onClick={() => { setCurrent(i); resetTimer(); }}
               aria-label={`Ir a ${i + 1}`}
               className="w-2.5 h-2.5 rounded-full transition-colors"
               style={{ backgroundColor: i === current ? "#006AFF" : "#D1D5DB" }}
