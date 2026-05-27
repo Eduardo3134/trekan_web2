@@ -6,6 +6,7 @@ import PricingSection from "@/components/PricingSection";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import FAQSection from "@/components/FAQSection";
 import ScrollReveal from "@/components/ScrollReveal";
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
         <PricingSection />
       </main>
       <TestimonialsSection />
+      <FAQSection />
       <Footer />
       <ScrollToTop />
       <ScrollReveal />
