@@ -6,6 +6,7 @@ import PricingSection from "@/components/PricingSection";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <TestimonialsSection />
       <Footer />
       <ScrollToTop />
+      <ScrollReveal />
     </div>
   );
 }

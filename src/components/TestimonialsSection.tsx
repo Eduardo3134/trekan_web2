@@ -161,6 +161,7 @@ export default function TestimonialsSection() {
               aria-label={`Ir a ${i + 1}`}
               className="w-2.5 h-2.5 rounded-full transition-colors"
               style={{ backgroundColor: i === current ? "#006AFF" : "#D1D5DB" }}
+              suppressHydrationWarning
             />
           ))}
         </div>
