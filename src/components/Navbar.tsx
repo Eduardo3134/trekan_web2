@@ -13,14 +13,13 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#080D1A]/90 backdrop-blur-md border-b border-white/10 shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#080D1A]/70 backdrop-blur-md border-b border-white/10 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+        <div className="flex items-center justify-between h-20">
+          {/* Logo + Nav left group */}
+          <div className="flex items-center gap-10">
           <a href="#" className="flex items-center shrink-0">
-            <span className="text-2xl font-extrabold leading-none text-white">
-              Trekan
-            </span>
+            <img src="/logo.png" alt="Trekan" className="h-[73px] w-auto" />
           </a>
 
           {/* Desktop nav */}
@@ -35,6 +34,7 @@ export default function Navbar() {
               </a>
             ))}
           </nav>
+          </div>
 
           {/* Desktop auth buttons */}
           <div className="hidden md:flex items-center gap-3">
