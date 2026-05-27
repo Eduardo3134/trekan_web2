@@ -41,7 +41,8 @@ function PhoneInput({
       <select
         value={countryCode}
         onChange={(e) => handleCode(e.target.value)}
-        className="border border-gray-300 rounded px-2 py-2 text-sm bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 shrink-0"
+        className="border border-white/10 rounded px-2 py-2 text-sm bg-[#1a2236] text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-700 shrink-0"
+        suppressHydrationWarning
       >
         {COUNTRY_CODES.map((c) => (
           <option key={c.value} value={c.value}>{c.label}</option>
@@ -52,6 +53,7 @@ function PhoneInput({
         value={local}
         onChange={(e) => handleLocal(e.target.value)}
         className="rounded flex-1"
+        suppressHydrationWarning
       />
     </div>
   );
@@ -77,16 +79,16 @@ function DemoCard({
   children?: React.ReactNode;
 }) {
   return (
-    <Card className="border border-gray-200 rounded shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
+    <Card className="bg-[#0F1629] rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
       <CardHeader className="pb-3">
         <div
-          className="w-11 h-11 rounded flex items-center justify-center mb-3 text-white"
-          style={{ backgroundColor: accentColor }}
+          className="mb-3"
+          style={{ color: accentColor }}
         >
           {icon}
         </div>
-        <CardTitle className="text-lg font-bold text-gray-900">{title}</CardTitle>
-        <CardDescription className="text-gray-500 text-sm leading-relaxed">
+        <CardTitle className="text-lg font-bold text-white">{title}</CardTitle>
+        <CardDescription className="text-gray-400 text-sm leading-relaxed">
           {description}
         </CardDescription>
       </CardHeader>
@@ -143,6 +145,7 @@ function VoiceDemo() {
               disabled={loading}
               className="w-full font-semibold rounded py-2 text-sm text-white hover:opacity-90 transition-opacity disabled:opacity-60"
               style={{ backgroundColor: "#006AFF" }}
+              suppressHydrationWarning
             >
               {loading ? "Enviando..." : "Recibir llamada demo →"}
             </button>
@@ -202,9 +205,10 @@ function WhatsAppCampaignDemo() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="rounded"
+              suppressHydrationWarning
             />
             <PhoneInput value={phone} onChange={setPhone} />
-            <div className="bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-700 leading-relaxed italic">
+            <div className="bg-[#080D1A] border border-white/10 rounded p-3 text-sm text-gray-300 leading-relaxed italic">
               &ldquo;{`Hola ${name || "[nombre]"}, te estamos escribiendo para darte una buena noticia, de ahora en adelante compra todos nuestros productos de temporada anterior con un 50% de descuento`}&rdquo;
             </div>
             {error && <p className="text-xs text-red-500">{error}</p>}
@@ -213,6 +217,7 @@ function WhatsAppCampaignDemo() {
               disabled={loading}
               className="w-full font-semibold rounded py-2 text-sm text-white hover:opacity-90 transition-opacity disabled:opacity-60"
               style={{ backgroundColor: "#128C7E" }}
+              suppressHydrationWarning
             >
               {loading ? "Enviando..." : "Enviar mensaje de prueba →"}
             </button>
@@ -275,9 +280,10 @@ function VoiceCampaignDemo() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="rounded"
+              suppressHydrationWarning
             />
             <PhoneInput value={phone} onChange={setPhone} />
-            <div className="bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-700 leading-relaxed italic">
+            <div className="bg-[#080D1A] border border-white/10 rounded p-3 text-sm text-gray-300 leading-relaxed italic">
               &ldquo;{CAMPAIGN_MESSAGE(name)}&rdquo;
             </div>
             {error && <p className="text-xs text-red-500">{error}</p>}
@@ -286,6 +292,7 @@ function VoiceCampaignDemo() {
               disabled={loading}
               className="w-full font-semibold rounded py-2 text-sm text-white hover:opacity-90 transition-opacity disabled:opacity-60"
               style={{ backgroundColor: "#F4860C" }}
+              suppressHydrationWarning
             >
               {loading ? "Enviando..." : "Escuchar audio de prueba →"}
             </button>
@@ -348,9 +355,10 @@ function MixedCampaignDemo() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="rounded"
+              suppressHydrationWarning
             />
             <PhoneInput value={phone} onChange={setPhone} />
-            <div className="bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-700 leading-relaxed italic">
+            <div className="bg-[#080D1A] border border-white/10 rounded p-3 text-sm text-gray-300 leading-relaxed italic">
               &ldquo;{MIXED_MESSAGE(name)}&rdquo;
             </div>
             {error && <p className="text-xs text-red-500">{error}</p>}
@@ -359,6 +367,7 @@ function MixedCampaignDemo() {
               disabled={loading}
               className="w-full font-semibold rounded py-2 text-sm text-white hover:opacity-90 transition-opacity disabled:opacity-60"
               style={{ backgroundColor: "#7C3AED" }}
+              suppressHydrationWarning
             >
               {loading ? "Enviando..." : "Probar campaña mixta →"}
             </button>
@@ -397,6 +406,7 @@ function CampaignDemo({
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="rounded"
+          suppressHydrationWarning
         />
         {showPhone && (
           <PhoneInput value={phone} onChange={setPhone} />
@@ -407,6 +417,7 @@ function CampaignDemo({
         <button
           className="w-full font-semibold rounded py-2 text-sm text-white hover:opacity-90 transition-opacity"
           style={{ backgroundColor: accentColor }}
+          suppressHydrationWarning
         >
           {ctaLabel}
         </button>
@@ -417,14 +428,19 @@ function CampaignDemo({
 
 export default function DemosSection() {
   return (
-    <section id="demos" className="py-20 bg-white scroll-mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="demos" className="relative py-20 bg-[#080D1A] scroll-mt-16 overflow-hidden">
+      {/* Top-center blue radial glow */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(0,80,200,0.45) 0%, transparent 70%)" }}
+      />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-14">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
             Experimenta tus Agentes de IA
           </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
             Prueba cómo funcionarían tus agentes antes de contratar. Sin tarjeta
             de crédito, sin compromiso.
           </p>

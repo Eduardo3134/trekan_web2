@@ -72,14 +72,19 @@ const supervisorFeatures = [
 
 export default function ProductsSection() {
   return (
-    <section id="productos" className="py-20 scroll-mt-16" style={{ backgroundColor: "#F8FAFC" }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="productos" className="relative py-20 scroll-mt-16 overflow-hidden" style={{ backgroundColor: "#080D1A" }}>
+      {/* Top-center blue radial glow */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(0,80,200,0.45) 0%, transparent 70%)" }}
+      />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
             IA que trabaja para tu negocio
           </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
             Agentes inteligentes que se integran con tus herramientas actuales y
             automatizan los procesos que más tiempo te consumen.
           </p>
@@ -88,37 +93,31 @@ export default function ProductsSection() {
         {/* ===== AGENTES IA ===== */}
         <div className="mb-20">
           <div className="flex items-center gap-3 mb-8">
-            <div
-              className="w-10 h-10 rounded flex items-center justify-center text-white"
-              style={{ backgroundColor: "#006AFF" }}
-            >
+            <div className="text-[#006AFF]">
               <Layers size={20} />
             </div>
-            <h3 className="text-2xl font-extrabold text-gray-900">Agentes IA</h3>
+            <h3 className="text-2xl font-extrabold text-white">Agentes IA</h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {agentSkills.map((skill) => (
               <div
                 key={skill.title}
-                className="bg-white rounded-md p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col"
+                className="bg-[#0F1629] rounded-xl p-6 border border-white/10 shadow-sm hover:shadow-md transition-shadow flex flex-col"
               >
-                <div
-                  className="w-11 h-11 rounded flex items-center justify-center mb-4 text-white"
-                  style={{ backgroundColor: "#006AFF" }}
-                >
+                <div className="mb-4 text-[#006AFF]">
                   {skill.icon}
                 </div>
-                <h4 className="font-bold text-gray-900 mb-2">{skill.title}</h4>
-                <p className="text-sm text-gray-500 leading-relaxed mb-4 flex-1">{skill.description}</p>
+                <h4 className="font-bold text-white mb-2">{skill.title}</h4>
+                <p className="text-sm text-gray-400 leading-relaxed mb-4 flex-1">{skill.description}</p>
                 <div className="flex flex-wrap gap-1.5 mt-auto">
                   {skill.badges.map((badge) => (
                     <span
                       key={badge}
                       className="text-xs font-medium px-2 py-0.5 rounded border"
                       style={{
-                        backgroundColor: "#EBF3FF",
-                        borderColor: "#BFDBFE",
+                      backgroundColor: "rgba(0,106,255,0.15)",
+                        borderColor: "rgba(0,106,255,0.3)",
                         color: "#006AFF",
                       }}
                     >
@@ -134,17 +133,14 @@ export default function ProductsSection() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div
               className="rounded-md p-5 border flex items-start gap-4"
-              style={{ backgroundColor: "#EBF3FF", borderColor: "#BFDBFE" }}
+              style={{ backgroundColor: "rgba(0,106,255,0.1)", borderColor: "rgba(0,106,255,0.25)", borderRadius: "0.75rem" }}
             >
-              <div
-                className="w-10 h-10 rounded flex items-center justify-center shrink-0 text-white"
-                style={{ backgroundColor: "#006AFF" }}
-              >
+              <div className="text-[#006AFF] shrink-0">
                 <Layers size={18} />
               </div>
               <div>
-                <p className="font-bold text-gray-900 mb-1">Multi-habilidad</p>
-                <p className="text-sm text-gray-600">
+                <p className="font-bold text-white mb-1">Multi-habilidad</p>
+                <p className="text-sm text-gray-400">
                   Todos los agentes pueden combinar múltiples habilidades. Por
                   ejemplo: un agente puede atender clientes{" "}
                   <strong>y</strong> ser consultor de productos/servicios
@@ -154,19 +150,16 @@ export default function ProductsSection() {
             </div>
             <div
               className="rounded-md p-5 border flex items-start gap-4"
-              style={{ backgroundColor: "#FFF3E0", borderColor: "#FDBA74" }}
+              style={{ backgroundColor: "rgba(244,134,12,0.1)", borderColor: "rgba(244,134,12,0.25)", borderRadius: "0.75rem" }}
             >
-              <div
-                className="w-10 h-10 rounded flex items-center justify-center shrink-0 text-white"
-                style={{ backgroundColor: "#F4860C" }}
-              >
+              <div className="text-[#F4860C] shrink-0">
                 <Plug size={18} />
               </div>
               <div>
-                <p className="font-bold text-gray-900 mb-1">
+                <p className="font-bold text-white mb-1">
                   Integración con tu ecosistema
                 </p>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-400">
                   Todos los agentes pueden integrarse con tu <strong>CRM</strong>,{" "}
                   <strong>ERP</strong> o cualquier sistema de gestión que uses
                   actualmente.
@@ -179,17 +172,14 @@ export default function ProductsSection() {
         {/* ===== SUPERVISOR IA ===== */}
         <div>
           <div className="flex items-center gap-3 mb-8">
-            <div
-              className="w-10 h-10 rounded flex items-center justify-center text-white"
-              style={{ backgroundColor: "#F4860C" }}
-            >
+            <div className="text-[#F4860C]">
               <BarChart2 size={20} />
             </div>
-            <h3 className="text-2xl font-extrabold text-gray-900">Supervisor IA</h3>
+            <h3 className="text-2xl font-extrabold text-white">Supervisor IA</h3>
           </div>
 
           <div
-            className="rounded-lg overflow-hidden border border-gray-100 shadow-sm"
+            className="rounded-xl overflow-hidden border border-white/10 shadow-sm"
             style={{
               background: "linear-gradient(135deg, #006AFF 0%, #004FCC 100%)",
             }}
@@ -227,19 +217,16 @@ export default function ProductsSection() {
                 </ul>
               </div>
               {/* Right features */}
-              <div className="p-8 lg:p-12 bg-white">
+              <div className="p-8 lg:p-12 bg-[#0F1629]">
                 <div className="space-y-6">
                   {supervisorFeatures.map((feat) => (
                     <div key={feat.title} className="flex items-start gap-4">
-                      <div
-                        className="w-11 h-11 rounded flex items-center justify-center shrink-0 text-white"
-                        style={{ backgroundColor: "#F4860C" }}
-                      >
+                      <div className="text-[#F4860C] shrink-0">
                         {feat.icon}
                       </div>
                       <div>
-                        <h5 className="font-bold text-gray-900 mb-1">{feat.title}</h5>
-                        <p className="text-sm text-gray-500 leading-relaxed">
+                        <h5 className="font-bold text-white mb-1">{feat.title}</h5>
+                        <p className="text-sm text-gray-400 leading-relaxed">
                           {feat.description}
                         </p>
                       </div>

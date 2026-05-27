@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 
 function CheckItem({ text }: { text: string }) {
   return (
-    <li className="flex items-start gap-2 text-sm text-gray-600">
+    <li className="flex items-start gap-2 text-sm text-gray-300">
       <Check size={16} className="mt-0.5 shrink-0 text-green-500" />
       {text}
     </li>
@@ -31,11 +31,11 @@ function PlanCard({
 }) {
   return (
     <div
-      className={`relative rounded border flex flex-col p-6 transition-shadow ${
+      className={`relative rounded-xl border flex flex-col p-6 transition-shadow ${
         highlighted
-          ? "border-[#006AFF] shadow-lg shadow-blue-100"
-          : "border-gray-200 shadow-sm hover:shadow-md"
-      } ${isCustom ? "bg-gradient-to-br from-[#006AFF] to-[#004FCC] text-white" : "bg-white"}`}
+          ? "border-[#006AFF] shadow-lg shadow-blue-900/30"
+          : "border-white/10 shadow-sm hover:shadow-md"
+      } ${isCustom ? "bg-gradient-to-br from-[#006AFF] to-[#004FCC] text-white" : "bg-[#0F1629]"}`}
     >
       {badge && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -58,7 +58,7 @@ function PlanCard({
         </h4>
         {price ? (
           <div className="flex items-end gap-1">
-            <span className={`text-4xl font-extrabold ${isCustom ? "text-white" : "text-gray-900"}`}>
+            <span className={`text-4xl font-extrabold ${isCustom ? "text-white" : "text-white"}`}>
               {price}
             </span>
             {priceUnit && (
@@ -69,7 +69,7 @@ function PlanCard({
           </div>
         ) : (
           <div>
-            <span className={`text-3xl font-extrabold ${isCustom ? "text-white" : "text-gray-900"}`}>
+            <span className={`text-3xl font-extrabold ${isCustom ? "text-white" : "text-white"}`}>
               A cotizar
             </span>
           </div>
@@ -83,7 +83,7 @@ function PlanCard({
               size={16}
               className={`mt-0.5 shrink-0 ${isCustom ? "text-[#F4860C]" : "text-green-500"}`}
             />
-            <span className={isCustom ? "text-white/90" : "text-gray-600"}>{f}</span>
+            <span className={isCustom ? "text-white/90" : "text-gray-300"}>{f}</span>
           </li>
         ))}
       </ul>
@@ -95,7 +95,7 @@ function PlanCard({
         className={`w-full inline-flex items-center justify-center font-bold rounded py-2 text-sm transition-colors ${
           highlighted || isCustom
             ? "text-white hover:opacity-90"
-            : "text-[#006AFF] border border-[#006AFF] hover:bg-blue-50"
+            : "text-[#006AFF] border border-[#006AFF] hover:bg-blue-900/20"
         }`}
         style={
           highlighted
@@ -122,13 +122,10 @@ function SectionTitle({
 }) {
   return (
     <div className="flex items-center gap-3 mb-8">
-      <div
-        className="w-10 h-10 rounded-xl flex items-center justify-center text-white"
-        style={{ backgroundColor: "#006AFF" }}
-      >
+      <div className="text-[#006AFF]">
         {icon}
       </div>
-      <h3 className="text-2xl font-extrabold text-gray-900">
+      <h3 className="text-2xl font-extrabold text-white">
         {title}{" "}
         {highlight && (
           <span style={{ color: "#F4860C" }}>{highlight}</span>
@@ -140,14 +137,19 @@ function SectionTitle({
 
 export default function PricingSection() {
   return (
-    <section id="precios" className="py-20 bg-white scroll-mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="precios" className="relative py-20 bg-[#0A0E1F] scroll-mt-16 overflow-hidden">
+      {/* Top-center blue radial glow */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[550px] pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(0,80,200,0.5) 0%, transparent 70%)" }}
+      />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
             Planes para cada etapa de tu negocio
           </h2>
-          <p className="text-base text-gray-500 max-w-xl mx-auto">
+          <p className="text-base text-gray-400 max-w-xl mx-auto">
             Sin costos ocultos. Precios no incluyen impuestos aplicables.
           </p>
         </div>
@@ -209,8 +211,8 @@ export default function PricingSection() {
           </div>
 
           {/* Considerations */}
-          <div className="rounded border border-gray-100 bg-gray-50 p-5 text-sm text-gray-600 space-y-1.5">
-            <p className="font-semibold text-gray-800 mb-2">Consideraciones:</p>
+          <div className="rounded-xl border border-white/10 bg-[#0A0E1F] p-5 text-sm text-gray-400 space-y-1.5">
+            <p className="font-semibold text-gray-200 mb-2">Consideraciones:</p>
             <ul className="space-y-1.5">
               <CheckItem text="Cada habilidad adicional: 20 USD por mes" />
               <CheckItem text="Integraciones con CRM, ERP o software de gestión: 500 USD (pago único)" />
@@ -225,10 +227,10 @@ export default function PricingSection() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div
-              className="rounded p-6 border flex flex-col justify-between min-h-[220px]"
+              className="rounded-xl p-6 border flex flex-col justify-between min-h-[220px]"
               style={{
-                background: "linear-gradient(135deg, #FFF3E0, #FFF8F0)",
-                borderColor: "#FDBA74",
+                background: "linear-gradient(135deg, #1a0e05, #120a03)",
+                borderColor: "rgba(244,134,12,0.35)",
               }}
             >
               <div>
@@ -236,7 +238,7 @@ export default function PricingSection() {
                   Supervisor IA
                 </p>
                 <div className="flex items-end gap-1 mb-3">
-                  <span className="text-4xl font-extrabold text-gray-900">$0.10</span>
+                  <span className="text-4xl font-extrabold text-white">$0.10</span>
                   <span className="text-sm text-gray-400 mb-1">USD / conversación auditada</span>
                 </div>
                 <ul className="space-y-2">
@@ -256,8 +258,8 @@ export default function PricingSection() {
                 Contratar Supervisor →
               </a>
             </div>
-            <div className="rounded border border-gray-100 bg-gray-50 p-5 text-sm text-gray-600 flex flex-col justify-center">
-              <p className="font-semibold text-gray-800 mb-3">Consideraciones:</p>
+            <div className="rounded-xl border border-white/10 bg-[#0A0E1F] p-5 text-sm text-gray-400 flex flex-col justify-center">
+              <p className="font-semibold text-gray-200 mb-3">Consideraciones:</p>
               <ul className="space-y-1.5">
                 <CheckItem text="Integraciones con CRM, ERP o software de gestión: 500 USD (pago único)" />
                 <CheckItem text="Los precios no incluyen impuestos" />
@@ -276,18 +278,15 @@ export default function PricingSection() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             {/* Campaña voz */}
-            <div className="bg-white rounded border border-gray-200 shadow-sm p-6 flex flex-col gap-4">
+            <div className="bg-[#0F1629] rounded-xl border border-white/10 shadow-sm p-6 flex flex-col gap-4">
               <div className="flex items-center gap-3">
-                <div
-                  className="w-11 h-11 rounded flex items-center justify-center text-white"
-                  style={{ backgroundColor: "#006AFF" }}
-                >
+                <div className="text-[#006AFF]">
                   <PhoneCall size={20} />
                 </div>
-                <h4 className="font-bold text-gray-900">Campaña Voz + Agente IA</h4>
+                <h4 className="font-bold text-white">Campaña Voz + Agente IA</h4>
               </div>
               <div className="flex items-end gap-1">
-                <span className="text-4xl font-extrabold text-gray-900">$0.30</span>
+                <span className="text-4xl font-extrabold text-white">$0.30</span>
                 <span className="text-sm text-gray-400 mb-1">USD / minuto</span>
               </div>
               <ul className="space-y-2 flex-1">
@@ -307,18 +306,15 @@ export default function PricingSection() {
             </div>
 
             {/* Campaña WhatsApp */}
-            <div className="bg-white rounded border border-gray-200 shadow-sm p-6 flex flex-col gap-4">
+            <div className="bg-[#0F1629] rounded-xl border border-white/10 shadow-sm p-6 flex flex-col gap-4">
               <div className="flex items-center gap-3">
-                <div
-                  className="w-11 h-11 rounded flex items-center justify-center text-white"
-                  style={{ backgroundColor: "#25D366" }}
-                >
+                <div className="text-[#25D366]">
                   <MessageCircle size={20} />
                 </div>
-                <h4 className="font-bold text-gray-900">Campaña WhatsApp + Agente IA</h4>
+                <h4 className="font-bold text-white">Campaña WhatsApp + Agente IA</h4>
               </div>
               <div className="flex items-end gap-1">
-                <span className="text-4xl font-extrabold text-gray-900">$0.14</span>
+                <span className="text-4xl font-extrabold text-white">$0.14</span>
                 <span className="text-sm text-gray-400 mb-1">USD / mensaje</span>
               </div>
               <ul className="space-y-2 flex-1">
@@ -339,8 +335,8 @@ export default function PricingSection() {
           </div>
 
           {/* Campaign considerations */}
-          <div className="rounded border border-gray-100 bg-gray-50 p-5 text-sm text-gray-600">
-            <p className="font-semibold text-gray-800 mb-2">Consideraciones:</p>
+          <div className="rounded-xl border border-white/10 bg-[#0A0E1F] p-5 text-sm text-gray-400">
+            <p className="font-semibold text-gray-200 mb-2">Consideraciones:</p>
             <ul className="space-y-1.5">
               <CheckItem text="Las respuestas de los Agentes IA se contratan como Agente IA con habilidad de respuesta a campaña" />
               <CheckItem text="Integraciones con CRM, ERP o software de gestión: 500 USD (pago único)" />

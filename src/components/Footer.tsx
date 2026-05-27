@@ -54,9 +54,14 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer id="contacto" className="text-white" style={{ backgroundColor: "#0A1628" }}>
+    <footer id="contacto" className="relative text-white overflow-hidden" style={{ backgroundColor: "#0A1628" }}>
+      {/* Top-center blue radial glow */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[450px] pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(0,80,200,0.35) 0%, transparent 70%)" }}
+      />
       {/* Main footer content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {/* Column 1: About */}
           <div>

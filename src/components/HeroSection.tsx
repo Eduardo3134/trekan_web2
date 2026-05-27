@@ -4,14 +4,14 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative flex items-center justify-center overflow-hidden py-16"
     >
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1600&q=80')",
+            "url('/hero-bg.jpg')",
         }}
       />
 
@@ -20,12 +20,12 @@ export default function HeroSection() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(135deg, rgba(0,106,255,0.92) 0%, rgba(0,51,153,0.88) 60%, rgba(0,20,80,0.95) 100%)",
+          "linear-gradient(135deg, rgba(5,10,30,0.88) 0%, rgba(5,10,25,0.82) 60%, rgba(2,5,15,0.92) 100%)",
         }}
       />
 
       {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white pt-20 pb-16">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white pt-20 pb-8">
         {/* Heading */}
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight mb-8 drop-shadow-lg">
           Imagina un{" "}
