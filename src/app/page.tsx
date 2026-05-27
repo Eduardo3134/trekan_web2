@@ -4,6 +4,7 @@ import DemosSection from "@/components/DemosSection";
 import ProductsSection from "@/components/ProductsSection";
 import PricingSection from "@/components/PricingSection";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         <PricingSection />
       </main>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }
