@@ -447,7 +447,11 @@ export default function DemosSection() {
         </div>
 
         {/* Row 1: Direct agent demos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+        <div className="mb-4">
+          <h3 className="text-lg font-bold text-white mb-1">Agentes IA <span className="text-[#25D366]">Inbound</span></h3>
+          <p className="text-sm text-gray-400">Atienden consultas, ventas y reuniones entrantes 24/7.</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
           {/* Demo WhatsApp */}
           <DemoCard
             icon={<MessageCircle size={22} />}
@@ -471,6 +475,10 @@ export default function DemosSection() {
         </div>
 
         {/* Row 2: Campaign demos */}
+        <div className="mb-4">
+          <h3 className="text-lg font-bold text-white mb-1">Agentes IA para Campañas <span className="text-[#F4860C]">Outbound</span></h3>
+          <p className="text-sm text-gray-400">Lanzan campañas masivas por voz y WhatsApp de forma automática y obtienen respuestas parametrizadas.</p>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
           {/* Campaña WhatsApp */}
           <WhatsAppCampaignDemo />
